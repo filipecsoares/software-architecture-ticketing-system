@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'com.fcs.microservices.api'
+group = 'com.fcs'
 version = '0.0.1-SNAPSHOT'
 description = 'API'
 
@@ -18,14 +18,7 @@ repositories {
 	mavenCentral()
 }
 
-
-ext {
-    springBootVersion = '4.0.3'
-}
-
 dependencies {
-    implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
-
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
