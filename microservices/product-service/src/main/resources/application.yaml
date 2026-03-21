@@ -1,3 +1,11 @@
 spring:
   application:
     name: product-service
+
+server:
+    port: 7001
+
+logging:
+  level:
+    root: INFO
+    com.fcs.microservices: DEBUG
