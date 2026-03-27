@@ -49,7 +49,7 @@ This project is designed to reflect real-world complexity and architectural deci
 
 ### 🧩 Fundamentals & Best Practices
 
-- [ ] **Chapter 1:** Clean Code and SOLID
+- [x] **Chapter 1:** Clean Code and SOLID
 - [ ] **Chapter 2:** Architectural Patterns (DDD, Hexagonal, Clean Architecture, Layered)
 - [ ] **Chapter 3:** REST API Maturity (The Glory of REST)
 
