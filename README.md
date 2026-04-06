@@ -50,8 +50,8 @@ This project is designed to reflect real-world complexity and architectural deci
 ### 🧩 Fundamentals & Best Practices
 
 - [x] **Chapter 1:** Clean Code and SOLID
-- [ ] **Chapter 2:** Architectural Patterns (DDD, Hexagonal, Clean Architecture, Layered)
-- [ ] **Chapter 3:** REST API Maturity (The Glory of REST)
+- [x] **Chapter 2:** Architectural Patterns (DDD, Hexagonal, Clean Architecture, Layered)
+- [x] **Chapter 3:** REST API Maturity (The Glory of REST)
 
 ### 🏗️ Applying Architecture (Ticketing System)
 
