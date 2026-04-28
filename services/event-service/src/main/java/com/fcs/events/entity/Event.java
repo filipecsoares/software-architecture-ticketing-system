@@ -31,4 +31,16 @@ public class Event {
                 && validity != null && validity.startDate() != null && validity.endDate() != null
                 && sessions != null && !sessions.isEmpty() && sessions.stream().allMatch(Session::isValid);
     }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(final Integer id) {
+        this.id = id;
+    }
 }

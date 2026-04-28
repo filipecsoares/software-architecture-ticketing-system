@@ -40,4 +40,16 @@ public class Session {
     public LocalDateTime getEndDateTime() {
         return endDateTime;
     }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public Map<Integer, Integer> getTicketTypeIdsByQtd() {
+        return ticketTypeIdsByQtd;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
