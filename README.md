@@ -70,8 +70,8 @@ These rules are central to the domain model and are enforced across services to 
 
 ### 🏗️ Applying Architecture (Ticketing System)
 
-- [ ] **Chapter 4:** Deriving Requirements with DDD
-- [ ] **Chapter 5:** Microservices Architecture Definition
+- [x] **Chapter 4:** Deriving Requirements with DDD
+- [x] **Chapter 5:** Microservices Architecture Definition
 - [ ] **Chapter 6:** Event Management (event-service, room-service, ticket-service)
 - [ ] **Chapter 7:** Order Reservation (order-service, customer-service, BFF, CORS)
 
