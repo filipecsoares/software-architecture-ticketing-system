@@ -72,7 +72,7 @@ These rules are central to the domain model and are enforced across services to 
 
 - [x] **Chapter 4:** Deriving Requirements with DDD
 - [x] **Chapter 5:** Microservices Architecture Definition
-- [ ] **Chapter 6:** Event Management (event-service, room-service, ticket-service)
+- [x] **Chapter 6:** Event Management (event-service, room-service, ticket-service)
 - [ ] **Chapter 7:** Order Reservation (order-service, customer-service, BFF, CORS)
 
 ### ⚙️ Advanced Architecture
