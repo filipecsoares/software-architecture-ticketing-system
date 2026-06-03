@@ -11,6 +11,22 @@ spring:
   h2:
     console:
       enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          event-service:
+            api:
+              baseurl: http://localhost:8100
+          ticket-service:
+            api:
+              baseurl: http://localhost:8300
+          room-service:
+            api:
+              baseurl: http://localhost:8200
+          order-service:
+            api:
+              baseurl: http://localhost:8400
 
 server:
   port: 8500
