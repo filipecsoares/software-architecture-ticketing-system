@@ -77,7 +77,7 @@ These rules are central to the domain model and are enforced across services to 
 
 ### ⚙️ Advanced Architecture
 
-- [ ] **Chapter 8:** Docker and Docker Compose
+- [x] **Chapter 8:** Docker and Docker Compose
 - [ ] **Chapter 9:** Event-Driven Architecture with Kafka
 - [ ] **Chapter 10:** Checkout and Payment Security (AES, adapters)
 - [ ] **Chapter 11:** Payment Processing (EDA integration)
