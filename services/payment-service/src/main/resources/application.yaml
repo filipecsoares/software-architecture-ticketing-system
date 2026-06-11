@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: payment-service
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    openfeign:
+      client:
+        config:
+          payment-service:
+            api:
+              base-url: http://localhost:9999
+          order-service:
+            api:
+              base-url: http://localhost:8400
+            
+payment:
+  requests:
+    topic:
+      name: payment-requests-topic
+    consumer:
+      group-id: paymentRequestsConsumerGroup
+
+hash:
+  ecrypt:
+    secret: my-secret-key
+
+server:
+  port: 8600
