@@ -11,20 +11,12 @@ public class JpaOrder {
 
     @Id
     @GeneratedValue
-    private final Integer id;
+    private Integer id;
     private Integer customerId;
     private Double totalPrice;
-    private Integer cardNumber;
-    private Integer cvv;
+    private Long cardNumber;
     private String cardHolderName;
     private LocalDate exp;
     private String cardBanner;
-    private OrderStatus status;
-
-    enum OrderStatus {
-        RESERVED,
-        PENDING,
-        PAID,
-        DENIED
-    }
+    private String status;
 }

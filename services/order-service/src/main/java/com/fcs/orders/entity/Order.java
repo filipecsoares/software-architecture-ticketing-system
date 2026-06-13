@@ -24,4 +24,11 @@ public class Order {
                 && totalPrice != null
                 && customerId != null;
     }
+
+    public boolean isValidToCreate() {
+        return isValidToReserveOrder()
+                && payment != null
+                && status != null
+                && status.equals(OrderStatus.PENDING);
+    }
 }

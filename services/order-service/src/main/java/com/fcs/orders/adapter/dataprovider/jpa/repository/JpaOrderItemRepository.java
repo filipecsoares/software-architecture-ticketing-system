@@ -18,4 +18,6 @@ public interface JpaOrderItemRepository extends JpaRepository<JpaOrderItem, Inte
             "WHERE oi.session_id = :sessionId " +
             "AND oitbc.ticket_by_chair_id = :ticketId", nativeQuery = true)
     Optional<List<JpaOrderItem>> findBySessionIdAndTicketId(Integer sessionId, Integer ticketId);
+
+    List<JpaOrderItem> findByOrderId(Integer orderId);
 }

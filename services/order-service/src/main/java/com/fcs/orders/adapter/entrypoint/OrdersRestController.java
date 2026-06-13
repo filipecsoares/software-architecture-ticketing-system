@@ -6,7 +6,7 @@ import com.fcs.orders.usecase.input.CreateOrderReservationInputBoundary;
 import com.fcs.orders.usecase.input.GetTotalUnavailableTicketsInputBoundary;
 import com.fcs.orders.usecase.input.GetUnavailableChairsInputBoundary;
 import com.fcs.orders.usecase.input.VerifyIfOnlyOneOrderIsInProgressInputBoundary;
-import com.fcs.orders.usecase.model.CreatedOrderReservationResponseModel;
+import com.fcs.orders.usecase.model.CreateOrderReservationResponseModel;
 import com.fcs.orders.usecase.model.UnavailableChairsResponseModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -74,8 +74,8 @@ public class OrdersRestController {
                     @ApiResponse(responseCode = "422", description = "When some business error occur"),
                     @ApiResponse(responseCode = "500", description = "When an internal error occur")
             })
-    public ResponseEntity<CreatedOrderReservationResponseModel> createReservation(@RequestBody CreateOrderReservationDto requestDto) {
-        CreatedOrderReservationResponseModel createdOrderReservationResponseModel = createOrderReservationInputBoundary.execute(mapper.createOrderReservationDtoToCreateOrderReservationRequestModel(requestDto));
-        return new ResponseEntity<>(createdOrderReservationResponseModel, HttpStatus.CREATED);
+    public ResponseEntity<CreateOrderReservationResponseModel> createReservation(@RequestBody CreateOrderReservationDto requestDto) {
+        CreateOrderReservationResponseModel createOrderReservationResponseModel = createOrderReservationInputBoundary.execute(mapper.createOrderReservationDtoToCreateOrderReservationRequestModel(requestDto));
+        return new ResponseEntity<>(createOrderReservationResponseModel, HttpStatus.CREATED);
     }
 }

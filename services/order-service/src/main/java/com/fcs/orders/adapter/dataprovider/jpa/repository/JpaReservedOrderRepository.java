@@ -25,4 +25,6 @@ public interface JpaReservedOrderRepository extends JpaRepository<JpaReservedOrd
     Optional<List<JpaReservedOrder>> findBySessionIdAndTicketIdAndCreationDateTimeAfter(@Param("sessionId") Integer sessionId,
                                                                                         @Param("ticketId") Integer ticketId,
                                                                                         @Param("timeLimit") LocalDateTime timeLimit);
+
+    Optional<JpaReservedOrder> findByIdAndCreationDateTimeAfter(Integer id, LocalDateTime creationDateTime);
 }

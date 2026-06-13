@@ -1,9 +1,9 @@
 package com.fcs.orders.usecase.presenter;
 
-import com.fcs.orders.usecase.model.CreatedOrderReservationResponseModel;
+import com.fcs.orders.usecase.model.CreateOrderReservationResponseModel;
 
 public interface CreatedOrderReservationPresenter {
-    CreatedOrderReservationResponseModel prepareSuccessView(CreatedOrderReservationResponseModel createdOrderReservationResponseModel);
+    CreateOrderReservationResponseModel prepareSuccessView(CreateOrderReservationResponseModel createOrderReservationResponseModel);
 
     void prepareFailView(String error);
 }

@@ -3,6 +3,7 @@ package com.fcs.orders.adapter.dataprovider.jpa.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 
 @Entity(name = "ORDER_ITEMS")
@@ -11,16 +12,16 @@ public class JpaOrderItem {
 
     @Id
     @GeneratedValue
-    private final Integer id;
-    private final Integer eventId;
-    private final Integer sessionId;
-    private final Integer roomId;
+    private Integer id;
+    private Integer eventId;
+    private Integer sessionId;
+    private Integer roomId;
 
     @ElementCollection
     @MapKeyColumn(name = "ticket_by_chair_id")
     @Column(name = "tickets_by_chair")
-    private final Map<Integer, String> ticketsByChairs;
+    private Map<Integer, List<String>> ticketsByChairs;
 
     @OneToOne
-    private final JpaOrder order;
+    private JpaOrder order;
 }

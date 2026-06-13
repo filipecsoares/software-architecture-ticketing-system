@@ -5,7 +5,7 @@ import com.fcs.orders.entity.factory.OrderReservedFactory;
 import com.fcs.orders.usecase.gateway.OrderGateway;
 import com.fcs.orders.usecase.input.CreateOrderReservationInputBoundary;
 import com.fcs.orders.usecase.model.CreateOrderReservationRequestModel;
-import com.fcs.orders.usecase.model.CreatedOrderReservationResponseModel;
+import com.fcs.orders.usecase.model.CreateOrderReservationResponseModel;
 import com.fcs.orders.usecase.presenter.CreatedOrderReservationPresenter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class CreateOrderReservationInteractor implements CreateOrderReservationI
     private final OrderGateway orderGateway;
 
     @Override
-    public CreatedOrderReservationResponseModel execute(CreateOrderReservationRequestModel reservationRequestModel) {
+    public CreateOrderReservationResponseModel execute(CreateOrderReservationRequestModel reservationRequestModel) {
         try {
             OrderReservedFactory reservedFactory = new OrderReservedFactory();
             Order createdReservedOrder = reservedFactory.create(reservationRequestModel.eventId(),

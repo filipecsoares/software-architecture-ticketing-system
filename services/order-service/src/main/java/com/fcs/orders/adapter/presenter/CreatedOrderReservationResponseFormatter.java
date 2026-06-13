@@ -1,7 +1,7 @@
 package com.fcs.orders.adapter.presenter;
 
 import com.fcs.orders.usecase.exception.BusinessException;
-import com.fcs.orders.usecase.model.CreatedOrderReservationResponseModel;
+import com.fcs.orders.usecase.model.CreateOrderReservationResponseModel;
 import com.fcs.orders.usecase.presenter.CreatedOrderReservationPresenter;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 public class CreatedOrderReservationResponseFormatter implements CreatedOrderReservationPresenter {
 
     @Override
-    public CreatedOrderReservationResponseModel prepareSuccessView(CreatedOrderReservationResponseModel createdOrderReservationResponseModel) {
-        return createdOrderReservationResponseModel;
+    public CreateOrderReservationResponseModel prepareSuccessView(CreateOrderReservationResponseModel createOrderReservationResponseModel) {
+        return createOrderReservationResponseModel;
     }
 
     @Override
