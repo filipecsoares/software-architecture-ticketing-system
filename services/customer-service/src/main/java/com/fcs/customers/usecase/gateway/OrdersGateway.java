@@ -1,5 +1,7 @@
 package com.fcs.customers.usecase.gateway;
 
+import com.fcs.customers.usecase.model.OrderResponseModel;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,4 +13,6 @@ public interface OrdersGateway {
     boolean hasOrderInProgress(Integer customerId);
 
     Integer createReservation(Integer eventId, Integer sessionId, Integer roomID, Map<Integer, List<String>> ticketsByChairs, Integer customerId, Double totalPrice);
+
+    List<OrderResponseModel> getAllByCustomerId(Integer customerId);
 }

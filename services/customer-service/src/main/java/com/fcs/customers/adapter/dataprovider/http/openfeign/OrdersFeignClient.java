@@ -2,11 +2,15 @@ package com.fcs.customers.adapter.dataprovider.http.openfeign;
 
 import com.fcs.customers.adapter.dataprovider.http.openfeign.model.orders.CreateOrderReservationRequestEntity;
 import com.fcs.customers.adapter.dataprovider.http.openfeign.model.orders.CreatedOrderReservationResponseEntity;
+import com.fcs.customers.adapter.dataprovider.http.openfeign.model.orders.OrderDetailResponseEntity;
 import com.fcs.customers.adapter.dataprovider.http.openfeign.model.orders.UnavailableChairsResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @FeignClient(name = "orders-client", url = "${spring.cloud.openfeign.client.config.order-service.api.baseurl}")
 public interface OrdersFeignClient {
@@ -22,4 +26,7 @@ public interface OrdersFeignClient {
 
     @PostMapping("/reservation")
     CreatedOrderReservationResponseEntity createReservation(CreateOrderReservationRequestEntity createOrderReservationRequestEntity);
+
+    @GetMapping("/orders")
+    List<OrderDetailResponseEntity> getAllCustomerOrders(@RequestParam("customerId") Integer customerId);
 }
