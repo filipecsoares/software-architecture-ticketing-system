@@ -1,0 +1,30 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/api/payment",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "cardNumber": "1111111111111111"
+        },
+        "ignoreArrayOrder": true,
+        "ignoreExtraElements": true
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "status": "success",
+      "message": "Payment processed successfully."
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "delayDistribution": {
+      "type": "uniform",
+      "lower": 1000,
+      "upper": 3000
+    }
+  }
+}

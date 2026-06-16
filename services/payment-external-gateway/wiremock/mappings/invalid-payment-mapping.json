@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/api/payment",
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.cardNumber",
+        "doesNotMatch": "1111111111111111"
+      }
+    ]
+  },
+  "response": {
+    "status": 422,
+    "jsonBody": {
+      "status": "error",
+      "message": "Payment not authorized."
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "delayDistribution": {
+      "type": "uniform",
+      "lower": 1000,
+      "upper": 3000
+    }
+  }
+}
