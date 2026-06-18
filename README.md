@@ -84,7 +84,7 @@ These rules are central to the domain model and are enforced across services to 
 
 ### 🔐 Security
 
-- [ ] **Chapter 12:** Authentication and Authorization with OAuth2 & Keycloak
+- [x] **Chapter 12:** Authentication and Authorization with OAuth2 & Keycloak
 - [ ] **Chapter 13:** Admin Flow and Access Control
 
 ### 📊 Observability & Infrastructure
