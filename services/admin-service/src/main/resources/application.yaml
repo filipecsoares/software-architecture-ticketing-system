@@ -1,3 +1,39 @@
 spring:
   application:
     name: admin-service
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          event-service:
+            api:
+              baseurl: http://localhost:8100
+          ticket-service:
+            api:
+              baseurl: http://localhost:8300
+          room-service:
+            api:
+              baseurl: http://localhost:8200
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8999/realms/events-realm
+          jwk-set-uri: http://localhost:8999/realms/events-realm/protocol/openid-connect/certs
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+server:
+  port: 8700
