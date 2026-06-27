@@ -12,15 +12,6 @@
 .DS_Store
 Thumbs.db
 
-### Spring Boot ###
-# Application properties
-application-*.yml
-application-*.yaml
-application-*.properties
-!application.yml
-!application.yaml
-!application.properties
-
 # Gradle
 .gradle/
 build/
