@@ -1,0 +1,67 @@
+server:
+  port: 8500
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          event-service:
+            api:
+              baseurl: http://event-service:8100
+          ticket-service:
+            api:
+              baseurl: http://ticket-service:8300
+          room-service:
+            api:
+              baseurl: http://room-service:8200
+          order-service:
+            api:
+              baseurl: http://order-service:8400
+          payment-service:
+            api:
+              baseurl: http://payment-service:8600
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8999/realms/events-realm
+          jwk-set-uri: http://keycloak:8080/realms/events-realm/protocol/openid-connect/certs
+  application:
+    name: customer-service
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+  pattern:
+    correlation: '[${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://tempo:9411/api/v2/spans
+  endpoint:
+    health:
+      show:
+        details: always
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0

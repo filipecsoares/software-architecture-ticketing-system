@@ -27,6 +27,19 @@ spring:
           order-service:
             api:
               baseurl: http://localhost:8400
+          payment-service:
+            api:
+              baseurl: http://localhost:8600
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8999/realms/events-realm
+          jwk-set-uri: http://localhost:8999/realms/events-realm/protocol/openid-connect/certs
 
+logging:
+  level:
+    org.springframework.security: DEBUG
+    
 server:
   port: 8500
