@@ -30,7 +30,7 @@ public class GetCustomerOrdersInteractor implements GetCustomerOrdersInputBounda
     private final GetCustomerOrdersPresenter presenter;
 
     @Override
-    public List<OrderDetailResponseModel> execute(Integer customerId) {
+    public List<OrderDetailResponseModel> execute(String customerId) {
         List<OrderDetailResponseModel> orderDetailResponseModels = new ArrayList<>();
         try {
             List<OrderResponseModel> orderResponseModels = ordersGateway.getAllByCustomerId(customerId);

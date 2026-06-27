@@ -16,50 +16,45 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CreateCustomerOrderReservationInteractor implements CreateCustomerOrderReservationInputBoundary {
 
-    private final CustomerGateway customerGateway;
     private final EventsGateway eventsGateway;
     private final OrdersGateway ordersGateway;
 
     private final CreateCustomerOrderReservationPresenter createCustomerOrderReservationPresenter;
 
     @Override
-    public Integer execute(CreateCustomerOrderReservationRequestModel createOrderReservationRequestModel) {
-        boolean customerExists = customerGateway.getById(createOrderReservationRequestModel.customerId()) != null;
-        if (customerExists) {
-            EventCustomerResponseModel eventResponseModel = eventsGateway.getById(createOrderReservationRequestModel.eventId());
-            if (eventExists(createOrderReservationRequestModel, eventResponseModel)) {
-                boolean allChairsAvailable = true;
-                List<String> unavailableChairsToSession = ordersGateway.getUnavailableChairsToSession(createOrderReservationRequestModel.sessionId());
-                if (unavailableChairsToSession != null && !unavailableChairsToSession.isEmpty()) {
-                    allChairsAvailable = createOrderReservationRequestModel
-                            .ticketsByChairs()
-                            .values()
-                            .stream()
-                            .flatMap(List::stream)
-                            .noneMatch(unavailableChairsToSession::contains);
+    public Integer execute(CreateCustomerOrderReservationRequestModel createOrderReservationRequestModel, String customerId) {
+        EventCustomerResponseModel eventResponseModel = eventsGateway.getById(createOrderReservationRequestModel.eventId());
+        if (eventExists(createOrderReservationRequestModel, eventResponseModel)) {
+            boolean allChairsAvailable = true;
+            List<String> unavailableChairsToSession = ordersGateway.getUnavailableChairsToSession(createOrderReservationRequestModel.sessionId());
+            if (unavailableChairsToSession != null && !unavailableChairsToSession.isEmpty()) {
+                allChairsAvailable = createOrderReservationRequestModel
+                        .ticketsByChairs()
+                        .values()
+                        .stream()
+                        .flatMap(List::stream)
+                        .noneMatch(unavailableChairsToSession::contains);
+            }
+            if (allChairsAvailable) {
+                boolean hasOrderInProgress = ordersGateway.hasOrderInProgress(customerId);
+                if (!hasOrderInProgress) {
+                    Integer reservationId = ordersGateway.createReservation(createOrderReservationRequestModel.eventId(),
+                            createOrderReservationRequestModel.sessionId(),
+                            createOrderReservationRequestModel.roomId(),
+                            createOrderReservationRequestModel.ticketsByChairs(),
+                            customerId,
+                            createOrderReservationRequestModel.totalPrice());
+                    return createCustomerOrderReservationPresenter.prepareSuccessView(reservationId);
+                } else {
+                    createCustomerOrderReservationPresenter.prepareFailView("O cliente já possui um pedido em andamento.");
                 }
-                if (allChairsAvailable) {
-                    boolean hasOrderInProgress = ordersGateway.hasOrderInProgress(createOrderReservationRequestModel.customerId());
-                    if (!hasOrderInProgress) {
-                        Integer reservationId = ordersGateway.createReservation(createOrderReservationRequestModel.eventId(),
-                                createOrderReservationRequestModel.sessionId(),
-                                createOrderReservationRequestModel.roomId(),
-                                createOrderReservationRequestModel.ticketsByChairs(),
-                                createOrderReservationRequestModel.customerId(),
-                                createOrderReservationRequestModel.totalPrice());
-                        return createCustomerOrderReservationPresenter.prepareSuccessView(reservationId);
-                    } else {
-                        createCustomerOrderReservationPresenter.prepareFailView("O cliente já possui um pedido em andamento.");
-                    }
-                }  else {
-                    createCustomerOrderReservationPresenter.prepareFailView("As cadeiras selecionadas não estão mais disponiveis.");
-                }
-            } else {
-                createCustomerOrderReservationPresenter.prepareFailView("Não foi possível validar o evento.");
+            }  else {
+                createCustomerOrderReservationPresenter.prepareFailView("As cadeiras selecionadas não estão mais disponiveis.");
             }
         } else {
-            createCustomerOrderReservationPresenter.prepareFailView("Verifique que todas as informações do cliente estão preenchidas corretamente.");
+            createCustomerOrderReservationPresenter.prepareFailView("Não foi possível validar o evento.");
         }
+
         return null;
     }
 

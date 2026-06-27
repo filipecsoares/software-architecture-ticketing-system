@@ -5,5 +5,5 @@ import com.fcs.customers.usecase.model.OrderDetailResponseModel;
 import java.util.List;
 
 public interface GetCustomerOrdersInputBoundary {
-    List<OrderDetailResponseModel> execute(Integer customerId);
+    List<OrderDetailResponseModel> execute(String customerId);
 }

@@ -11,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class CustomersRestController {
-
-    private final CreateCustomerInputBoundary createCustomerInputBoundary;
-    private final GetAllCustomersInputBoundary getAllCustomersInputBoundary;
-    private final GetCustomerInputBoundary getCustomerInputBoundary;
-    private final DeleteCustomerInputBoundary deleteCustomerInputBoundary;
 
     private final ListEventsToCustomerInputBoundary listEventsToCustomerInputBoundary;
     private final ListTicketsToCustomerInputBoundary listTicketsToCustomerInputBoundary;
@@ -37,63 +35,10 @@ public class CustomersRestController {
 
     private final ICustomerMapper mapper;
 
-    // Fluxo de gestao de clientes
-
-    @PostMapping("/customer")
-    @Operation(summary = "Create a new customer",
-            description = "Given valid payload, create a new customer and return the new customer ID",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Success"),
-                    @ApiResponse(responseCode = "422", description = "When some business error occur"),
-                    @ApiResponse(responseCode = "500", description = "When an internal error occur")
-            })
-    public ResponseEntity<CustomerCreatedResponseModel> create(@RequestBody CreateCustomerDto requestDto) {
-        CustomerCreatedResponseModel customerCreatedResponseModel = createCustomerInputBoundary.execute(mapper.createCustomerDtoToCustomer(requestDto));
-        return new ResponseEntity<>(customerCreatedResponseModel, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/customers")
-    @Operation(summary = "Get all customers details",
-            description = "Given valid payload, return all customers details",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Success"),
-                    @ApiResponse(responseCode = "422", description = "When some business error occur"),
-                    @ApiResponse(responseCode = "500", description = "When an internal error occur")
-            })
-    public ResponseEntity<List<CustomerResponseModel>> getAll() {
-        List<CustomerResponseModel> allCustomers = getAllCustomersInputBoundary.execute();
-        return new ResponseEntity<>(allCustomers, HttpStatus.OK);
-    }
-
-    @GetMapping("/customer/{id}")
-    @Operation(summary = "Get customer details",
-            description = "Given valid payload, return customer details",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Success"),
-                    @ApiResponse(responseCode = "422", description = "When some business error occur"),
-                    @ApiResponse(responseCode = "500", description = "When an internal error occur")
-            })
-    public ResponseEntity<CustomerResponseModel> getCustomer(@PathVariable("id") Integer customerId) {
-        CustomerResponseModel customer = getCustomerInputBoundary.execute(customerId);
-        return new ResponseEntity<>(customer, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/customer/{id}")
-    @Operation(summary = "Delete the customer and its associate data",
-            description = "Given valid payload, delete the customer and its associate data",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Success"),
-                    @ApiResponse(responseCode = "422", description = "When some business error occur"),
-                    @ApiResponse(responseCode = "500", description = "When an internal error occur")
-            })
-    public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Integer customerId) {
-        deleteCustomerInputBoundary.execute(customerId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
     // Fluxo de listagem de eventos
 
     @GetMapping("/customer/events")
+    @PreAuthorize("hasRole('get-operations')")
     @Operation(summary = "List events to the customer",
             description = "Given valid payload, return events details to the customer",
             responses = {
@@ -107,6 +52,7 @@ public class CustomersRestController {
     }
 
     @GetMapping("/customer/tickets")
+    @PreAuthorize("hasRole('get-operations')")
     @Operation(summary = "List ticket details to the customer",
             description = "Given valid payload, return ticket details to the customer",
             responses = {
@@ -120,6 +66,7 @@ public class CustomersRestController {
     }
 
     @GetMapping("/customer/chairs")
+    @PreAuthorize("hasRole('get-operations')")
     @Operation(summary = "List chairs with availability for session to the customer",
             description = "Given valid payload, return chairs with availability for session to the customer",
             responses = {
@@ -137,7 +84,8 @@ public class CustomersRestController {
     // Fluxo de reserva de pedido
 
 
-    @PostMapping("/customer/{customerId}/reservation") // TODO ver isso aq... nao to usando PathVariable para obter o customerId
+    @PostMapping("/customer/reservation")
+    @PreAuthorize("hasRole('get-operations')")
     @Operation(summary = "Create a new order reservation",
             description = "Given valid payload, create a new order reservation and return reservation ID",
             responses = {
@@ -145,14 +93,16 @@ public class CustomersRestController {
                     @ApiResponse(responseCode = "422", description = "When some business error occur"),
                     @ApiResponse(responseCode = "500", description = "When an internal error occur")
             })
-    public ResponseEntity<Integer> createReservation(@RequestBody CreateOrderReservationDto requestDto) {
-        Integer reservationId = createCustomerOrderReservationInputBoundary.execute(mapper.createOrderReservationDtoToCreateOrderReservationRequestModel(requestDto));
+    public ResponseEntity<Integer> createReservation(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateOrderReservationDto requestDto) {
+        String customerId = jwt.getSubject();
+        Integer reservationId = createCustomerOrderReservationInputBoundary.execute(mapper.createOrderReservationDtoToCreateOrderReservationRequestModel(requestDto), customerId);
         return new ResponseEntity<>(reservationId, HttpStatus.CREATED);
     }
 
     // Fluxo de pagamento da reserva do pedido
 
     @PostMapping("/customer/payment")
+    @PreAuthorize("hasRole('get-operations')")
     @Operation(summary = "Create a new payment request for reservation",
             description = "Given valid payload, create a new payment request for reservation and return the request result",
             responses = {
@@ -171,10 +121,9 @@ public class CustomersRestController {
         return new ResponseEntity<>(responseModel, HttpStatus.CREATED);
     }
 
-    // Listagem dos pedidos
 
-
-    @GetMapping("/customer/{customerId}/orders") // TODO futuramente trocar pelo access token e nao passar customerId na url em rota q front vai chamar
+    @GetMapping("/customer/orders")
+    @PreAuthorize("hasRole('get-operations')")
     @Operation(summary = "List all orders from customer",
             description = "Given valid payload, return all orders from customer",
             responses = {
@@ -182,9 +131,9 @@ public class CustomersRestController {
                     @ApiResponse(responseCode = "422", description = "When some business error occur"),
                     @ApiResponse(responseCode = "500", description = "When an internal error occur")
             })
-    public ResponseEntity<List<OrderDetailResponseModel>> getCustomerAllOrders(@PathVariable("customerId") Integer customerId) {
+    public ResponseEntity<List<OrderDetailResponseModel>> getCustomerAllOrders(@AuthenticationPrincipal Jwt jwt) {
+        String customerId = jwt.getSubject();
         List<OrderDetailResponseModel> orders = getCustomerOrdersInputBoundary.execute(customerId);
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
-
 }

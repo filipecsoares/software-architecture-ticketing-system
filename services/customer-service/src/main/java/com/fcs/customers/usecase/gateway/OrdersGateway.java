@@ -10,9 +10,9 @@ public interface OrdersGateway {
 
     Integer getUnavailableTicketsToSession(Integer sessionId, Integer ticketId);
 
-    boolean hasOrderInProgress(Integer customerId);
+    boolean hasOrderInProgress(String customerId);
 
-    Integer createReservation(Integer eventId, Integer sessionId, Integer roomID, Map<Integer, List<String>> ticketsByChairs, Integer customerId, Double totalPrice);
+    Integer createReservation(Integer eventId, Integer sessionId, Integer roomID, Map<Integer, List<String>> ticketsByChairs, String customerId, Double totalPrice);
 
-    List<OrderResponseModel> getAllByCustomerId(Integer customerId);
+    List<OrderResponseModel> getAllByCustomerId(String customerId);
 }

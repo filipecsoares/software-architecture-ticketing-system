@@ -19,7 +19,7 @@ public interface OrdersFeignClient {
     UnavailableChairsResponseEntity getUnavailableChairsToSession(@PathVariable("sessionId") Integer sessionId);
 
     @GetMapping("/{customerId}/in-progress")
-    boolean hasOrderInProgress(@PathVariable("customerId") Integer customerId);
+    boolean hasOrderInProgress(@PathVariable("customerId") String customerId);
 
     @GetMapping("/sessions/{sessionId}/unavailable/tickets/{ticketId}")
     Integer getUnavailableTicketsToSession(@PathVariable("sessionId") Integer sessionId, @PathVariable("ticketId") Integer ticketId);
@@ -28,5 +28,5 @@ public interface OrdersFeignClient {
     CreatedOrderReservationResponseEntity createReservation(CreateOrderReservationRequestEntity createOrderReservationRequestEntity);
 
     @GetMapping("/orders")
-    List<OrderDetailResponseEntity> getAllCustomerOrders(@RequestParam("customerId") Integer customerId);
+    List<OrderDetailResponseEntity> getAllCustomerOrders(@RequestParam("customerId") String customerId);
 }

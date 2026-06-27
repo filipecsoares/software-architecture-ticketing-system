@@ -37,12 +37,12 @@ public class OrdersDataProviderByExternalApiAdapter implements OrdersGateway {
     }
 
     @Override
-    public boolean hasOrderInProgress(Integer customerId) {
+    public boolean hasOrderInProgress(String customerId) {
         return ordersFeignClient.hasOrderInProgress(customerId);
     }
 
     @Override
-    public Integer createReservation(Integer eventId, Integer sessionId, Integer roomId, Map<Integer, List<String>> ticketsByChairs, Integer customerId, Double totalPrice) {
+    public Integer createReservation(Integer eventId, Integer sessionId, Integer roomId, Map<Integer, List<String>> ticketsByChairs, String customerId, Double totalPrice) {
         CreateOrderReservationRequestEntity createOrderReservationRequestEntity
                 = new CreateOrderReservationRequestEntity(eventId, sessionId, roomId, ticketsByChairs, customerId, totalPrice);
         CreatedOrderReservationResponseEntity createdOrderReservationResponseEntity
@@ -51,7 +51,7 @@ public class OrdersDataProviderByExternalApiAdapter implements OrdersGateway {
     }
 
     @Override
-    public List<OrderResponseModel> getAllByCustomerId(Integer customerId) {
+    public List<OrderResponseModel> getAllByCustomerId(String customerId) {
         return ordersFeignClient.getAllCustomerOrders(customerId)
                 .stream()
                 .map(orderEntity -> new OrderResponseModel(
