@@ -90,7 +90,7 @@ These rules are central to the domain model and are enforced across services to 
 ### 📊 Observability & Infrastructure
 
 - [x] **Chapter 14:** Observability and Kubernetes
-- [ ] **Chapter 15:** References and Next Steps
+- [x] **Chapter 15:** References and Next Steps
 
 ---
 
